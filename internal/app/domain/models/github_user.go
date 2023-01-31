@@ -16,3 +16,8 @@ func NewGithubUser(login string, id int, nodeID, url, HTMLURL string) (user Gith
 		URL:    url,
 	}
 }
+
+func (gu GithubUser) Validate() (errorsList []error) {
+	pm := NewGithubUserPoliciesManager(gu)
+	return pm.Apply()
+}

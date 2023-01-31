@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/eviccari/multithread-test-go/internal/app/domain/dtos"
 )
@@ -20,6 +21,8 @@ func (gur GithubUserHTTPRepository) Get(pageSize, since int) (githubUsers []dtos
 		err = errors.New("pageSize must be greater than 0.\n since must be greater than or equal 0")
 		return
 	}
+
+	time.Sleep(15 * time.Second)
 
 	githubURL := "https://api.github.com/users"
 	res, err := http.Get(fmt.Sprintf("%s?per_page=%d&since=%d", githubURL, pageSize, since))

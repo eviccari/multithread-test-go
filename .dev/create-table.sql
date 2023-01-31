@@ -1,8 +1,8 @@
-create schema if not exists greatest_devs;
+create schema if not exists greatest_users;
 
-use greatest_devs;
+use greatest_users;
 
-create table if not exists devs (
+create table if not exists users (
     id varchar(100) not null, 
     legacy_login varchar(100) not null, 
     legacy_id numeric(10, 0) not null,
@@ -15,4 +15,4 @@ create table if not exists devs (
 );
 
 create user if not exists user_service identified by '123';
-grant all on devs to user_service;
+grant all on users to user_service;

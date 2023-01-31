@@ -2,6 +2,7 @@ package orchestrators
 
 import (
 	"log"
+	"time"
 
 	"github.com/eviccari/multithread-test-go/configs"
 	"github.com/eviccari/multithread-test-go/internal/app/domain"
@@ -9,20 +10,33 @@ import (
 
 var since = 0
 var loaded = 0
+var stime time.Time
 
 type HireGithubUsersOrchestrator struct {
-	s domain.GithubUserService
+	guService domain.GithubUserService
+	gtService domain.GreatestUserService
 }
 
-func NewHireGithubUsersOrchestrator(service domain.GithubUserService) HireGithubUsersOrchestrator {
+func NewHireGithubUsersOrchestrator(guService domain.GithubUserService, gtService domain.GreatestUserService) HireGithubUsersOrchestrator {
 	return HireGithubUsersOrchestrator{
-		s: service,
+		guService: guService,
+		gtService: gtService,
 	}
 }
 
 func (o HireGithubUsersOrchestrator) Execute() (errorsList []error) {
+	stime = time.Now()
+	if err := o.gtService.SetEmpty(); err != nil {
+		errorsList = append(errorsList, err)
+		return
+	}
+
+	log.Printf("truncate table -> total time: %v", time.Since(stime))
+
 	for {
-		gusers, err := o.s.Get(getPageSize(), since)
+		//		stime = time.Now()
+		gusers, err := o.guService.Get(getPageSize(), since)
+
 		if err != nil {
 			errorsList = append(errorsList, err)
 			break
@@ -32,8 +46,15 @@ func (o HireGithubUsersOrchestrator) Execute() (errorsList []error) {
 			break
 		}
 
+		for _, guDTO := range gusers {
+			gtDTO := domain.BuildGreatestUserDTOFromGithubUserDTO(guDTO)
+			errorsList = o.gtService.Create(gtDTO)
+			if len(errorsList) > 0 {
+				return
+			}
+		}
+
 		since = gusers[len(gusers)-1].ID
-		log.Println(since)
 
 		loaded += len(gusers)
 		if loaded >= configs.GithubUsersQuantity {

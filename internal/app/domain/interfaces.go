@@ -12,6 +12,11 @@ type GithubUserService interface {
 	Get(pageSize, since int) (githubUsers []dtos.GithubUserDTO, err error)
 }
 
+type GreatestUserService interface {
+	SetEmpty() (err error)
+	Create(dto dtos.GreatestUserDTO) (errorsList []error)
+}
+
 type Orchestrator interface {
 	Execute() (errorsList []error)
 }

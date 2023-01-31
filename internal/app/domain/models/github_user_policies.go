@@ -7,7 +7,7 @@ import (
 	"github.com/eviccari/multithread-test-go/internal/utils"
 )
 
-const pm_policy_tag = "policy"
+const github_user_policy_tag = "policy"
 
 type GithubUserPoliciesManager struct {
 	u GithubUser
@@ -38,7 +38,7 @@ func (pm GithubUserPoliciesManager) GetPolicies() (policies []func() error) {
 
 func (pm GithubUserPoliciesManager) LoginCannotBeEmpty() (err error) {
 	if utils.IsEmptyString(pm.u.Login) {
-		err = fmt.Errorf("%s:LoginCannotBeEmpty failed", pm_policy_tag)
+		err = fmt.Errorf("%s:LoginCannotBeEmpty failed", github_user_policy_tag)
 	}
 
 	return
@@ -46,7 +46,7 @@ func (pm GithubUserPoliciesManager) LoginCannotBeEmpty() (err error) {
 
 func (pm GithubUserPoliciesManager) IDMustBeGreaterThan0() (err error) {
 	if pm.u.ID < 1 {
-		err = fmt.Errorf("%s:IDMustBeGreaterThan0 failed", pm_policy_tag)
+		err = fmt.Errorf("%s:IDMustBeGreaterThan0 failed", github_user_policy_tag)
 	}
 
 	return
@@ -56,7 +56,7 @@ func (pm GithubUserPoliciesManager) UserURLMustBeAValidURL() (err error) {
 	pattern := regexp.MustCompile(`^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)`)
 
 	if matches := pattern.MatchString(pm.u.URL); !matches {
-		err = fmt.Errorf("%s:UserURLMustBeAValidURL failed", pm_policy_tag)
+		err = fmt.Errorf("%s:UserURLMustBeAValidURL failed", github_user_policy_tag)
 	}
 
 	return
