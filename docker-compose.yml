@@ -21,6 +21,9 @@ services:
     restart: unless-stopped
     environment:
       - ENVIRONMENT=DEV
+      - GITHUB_USERS_QUANTITY=1000000, 
+      - MULTITHREAD_SIZE=250,
+      - GITHUB_API_MAX_PAGE_SIZE=100,
       - DATABASE_USER_NAME=user_service
       - DATABASE_USER_PASS=123
       - DATABASE_HOST_NAME=database

@@ -1,1 +1,1 @@
-docker run -d --rm -p 3306:3306 --name mysql-local -e MYSQL_ROOT_PASSWORD=123 mysql:latest
+docker run -d --rm -p 3306:3306 --name mysql-local -e MYSQL_ROOT_PASSWORD=123 --volumes .dev/create-table.sql:/docker-entrypoint-initdb.d/1.sql mysql:latest 

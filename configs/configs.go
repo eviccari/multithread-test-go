@@ -3,6 +3,7 @@ package configs
 import (
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/eviccari/multithread-test-go/internal/utils"
 	"github.com/spf13/viper"
@@ -38,9 +39,20 @@ func init() {
 		log.Fatalf("error on load job configurations: %s", err.Error())
 	}
 
-	GithubUsersQuantity = viper.GetInt("GithubUsersQuantity")
-	MultiThreadSize = viper.GetInt("MultiThreadSize")
-	GithubAPIMaxPageSize = viper.GetInt("GithubAPIMaxPageSize")
+	GithubUsersQuantity, _ = strconv.Atoi(os.Getenv("GITHUB_USERS_QUANTITY"))
+	if GithubUsersQuantity == 0 {
+		GithubUsersQuantity = viper.GetInt("GithubUsersQuantity")
+	}
+
+	MultiThreadSize, _ = strconv.Atoi(os.Getenv("MULTITHREAD_SIZE"))
+	if MultiThreadSize == 0 {
+		MultiThreadSize = viper.GetInt("MultiThreadSize")
+	}
+
+	GithubAPIMaxPageSize, _ = strconv.Atoi(os.Getenv("GITHUB_API_MAX_PAGE_SIZE"))
+	if GithubAPIMaxPageSize == 0 {
+		GithubAPIMaxPageSize = viper.GetInt("GithubAPIMaxPageSize")
+	}
 
 	Environment = os.Getenv("ENVIRONMENT")
 	if utils.IsEmptyString(Environment) {

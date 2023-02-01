@@ -9,7 +9,6 @@ import (
 )
 
 func GetDB() (db *sql.DB, err error) {
-	log.Printf("DATABASE_URI: %s", getURI())
 	db, err = sql.Open(configs.DBEngine, getURI())
 	if err != nil {
 		log.Fatalf("error on connect to database: %s", err.Error())
