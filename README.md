@@ -27,7 +27,7 @@
     A quantidade de usuários a ser importada e o limite de threads abertas devem ser parametrizáveis.
 
 ## Estrutura de Projeto   
-
+![Project Structure](./docs/images/Project_Structure.png)
 
 
 

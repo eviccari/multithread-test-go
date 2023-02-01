@@ -5,10 +5,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/eviccari/multithread-test-go/internal/adapters/infra"
 	"github.com/eviccari/multithread-test-go/internal/adapters/repositories"
 	"github.com/eviccari/multithread-test-go/internal/app/domain/orchestrators"
 	"github.com/eviccari/multithread-test-go/internal/app/domain/services"
-	"github.com/eviccari/multithread-test-go/internal/infra"
 
 	_ "github.com/go-sql-driver/mysql"
 )
