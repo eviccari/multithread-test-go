@@ -8,7 +8,7 @@
     - Tamanho de Imagem Docker
     - Legibilidade + Manutenibilidade (um pouco subjetivo, deve ser analisado por pares)
 
-## Technologies
+## Tecnologias
     - Golang 1.19
     - MySQL ${latest}
     - Docker Engine
