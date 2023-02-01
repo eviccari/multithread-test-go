@@ -15,12 +15,12 @@ services:
     ports:
       - "3306:3306"
   job: 
-#    image: multithread-test-go:latest
     depends_on:
       - database
     build: .
     restart: unless-stopped
     environment:
+      - ENVIRONMENT=DEV
       - DATABASE_USER_NAME=user_service
       - DATABASE_USER_PASS=123
       - DATABASE_HOST_NAME=database

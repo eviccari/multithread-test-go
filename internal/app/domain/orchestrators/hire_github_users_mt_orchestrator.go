@@ -50,36 +50,11 @@ func (o HireGithubUsersMTOrchestrator) Execute() (errorsList []error) {
 		mt_since = gusers[len(gusers)-1].ID
 
 		for len(gusers) > 0 {
+
 			chunk := getMultiThreadChunk(gusers)
 
-			wg := sync.WaitGroup{}
-			c := make(chan []error, len(chunk))
-
-			mu := sync.Mutex{}
-
-			for _, gUser := range chunk {
-				wg.Add(1)
-				go func(guser dtos.GithubUserDTO) {
-					defer wg.Done()
-
-					el := o.gtService.Create(domain.BuildGreatestUserDTOFromGithubUserDTO(guser))
-					if len(el) == 0 {
-						mu.Lock()
-						mt_loaded++
-						mu.Unlock()
-					}
-					c <- el
-				}(gUser)
-			}
-
-			wg.Wait()
-			close(c)
-
-			for el := range c {
-				if len(el) > 0 {
-					errorsList = el
-					return
-				}
+			if errorsList = createUsersFromChunk(&o, chunk); len(errorsList) > 0 {
+				return
 			}
 
 			if mt_loaded >= configs.GithubUsersQuantity {
@@ -89,6 +64,40 @@ func (o HireGithubUsersMTOrchestrator) Execute() (errorsList []error) {
 			gusers = removeChunkedUsersFromList(len(chunk), gusers)
 		}
 	}
+	return
+}
+
+func createUsersFromChunk(o *HireGithubUsersMTOrchestrator, chunk []dtos.GithubUserDTO) (errorsList []error) {
+	wg := sync.WaitGroup{}
+	c := make(chan []error, len(chunk))
+
+	mu := sync.Mutex{}
+
+	for _, gUser := range chunk {
+		wg.Add(1)
+		go func(guser dtos.GithubUserDTO) {
+			defer wg.Done()
+
+			el := o.gtService.Create(domain.BuildGreatestUserDTOFromGithubUserDTO(guser))
+			if len(el) == 0 {
+				mu.Lock()
+				mt_loaded++
+				mu.Unlock()
+			}
+			c <- el
+		}(gUser)
+	}
+
+	wg.Wait()
+	close(c)
+
+	for el := range c {
+		if len(el) > 0 {
+			errorsList = el
+			return
+		}
+	}
+
 	return
 }
 

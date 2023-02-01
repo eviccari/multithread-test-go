@@ -16,6 +16,7 @@ const (
 	ConfigName  = ".env"
 )
 
+var Environment string
 var GithubUsersQuantity int
 var MultiThreadSize int
 var GithubAPIMaxPageSize int
@@ -40,6 +41,11 @@ func init() {
 	GithubUsersQuantity = viper.GetInt("GithubUsersQuantity")
 	MultiThreadSize = viper.GetInt("MultiThreadSize")
 	GithubAPIMaxPageSize = viper.GetInt("GithubAPIMaxPageSize")
+
+	Environment = os.Getenv("ENVIRONMENT")
+	if utils.IsEmptyString(Environment) {
+		Environment = viper.GetString("Environment")
+	}
 
 	DBUser = os.Getenv("DATABASE_USER_NAME")
 	if utils.IsEmptyString(DBUser) {
@@ -79,7 +85,11 @@ func printConfigs() {
 	log.Printf("MultiThreadSize.....: %d", MultiThreadSize)
 	log.Printf("GithubAPIMaxPageSize: %d", GithubAPIMaxPageSize)
 	log.Printf("DBUser..............: %s", DBUser)
-	log.Printf("DBPassword..........: %s", DBPassword) //TODO - DO NOT PUT THIS IN PRODUCTION
+
+	if Environment == "DEV" {
+		log.Printf("DBPassword..........: %s", DBPassword) //TODO - DO NOT PUT THIS IN PRODUCTION
+	}
+
 	log.Printf("DBHostName..........: %s", DBHostName)
 	log.Printf("DBPort..............: %s", DBPort)
 	log.Printf("DBName..............: %s", DBName)
