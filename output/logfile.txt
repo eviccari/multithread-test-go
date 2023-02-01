@@ -1,0 +1,13 @@
+2023/02/01 13:52:51 GithubUsersQuantity.: 1000000
+2023/02/01 13:52:51 MultiThreadSize.....: 250
+2023/02/01 13:52:51 GithubAPIMaxPageSize: 100
+2023/02/01 13:52:51 DBUser..............: user_service
+2023/02/01 13:52:51 DBPassword..........: 123
+2023/02/01 13:52:51 DBHostName..........: localhost
+2023/02/01 13:52:51 DBPort..............: 3306
+2023/02/01 13:52:51 DBName..............: greatest_users
+2023/02/01 13:52:51 DBEngine............: mysql
+2023/02/01 13:52:51 JOB with process ID 56889 starting now: 2023-02-01 16:52:51.317897 +0000 UTC
+2023/02/01 13:52:51 truncate table -> total time: 386.770834ms
+2023/02/01 13:56:01 JOB finish at: 2023-02-01 16:56:01.86607 +0000 UTC
+2023/02/01 13:56:01 total time: 3m10.556053666s
