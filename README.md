@@ -1,6 +1,6 @@
 ## Multithread Test - Go Version
 
-Este projeto tem por objetivo analisar vantagens e desvantagens ao utilizar [Golang](https://go.dev/) em processos/rotinas Batch oa invés de Java com [Spring Boot](https://spring.io/projects/spring-boot).
+Este projeto tem por objetivo analisar vantagens e desvantagens ao utilizar [Golang](https://go.dev/) em processos/rotinas Batch ao invés de Java com [Spring Boot](https://spring.io/projects/spring-boot).
 
 ## Pontos Avaliados
     - Performance (tempo de processamento)
