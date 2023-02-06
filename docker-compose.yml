@@ -35,8 +35,3 @@ services:
 
 networks:
   local_network:
-  
-  
-
-    
-

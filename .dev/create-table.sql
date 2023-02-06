@@ -11,6 +11,7 @@ create table if not exists users (
     legacy_html_url varchar(300) not null, 
     new_email varchar(100) not null, 
     created_at timestamp(6) not null,
+    user_status numeric(1) default 0,
     primary key (id)
 );
 
