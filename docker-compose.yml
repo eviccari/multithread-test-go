@@ -18,7 +18,7 @@ services:
     depends_on:
       - database
     build: .
-    restart: unless-stopped
+    restart: on-failure
     environment:
       - ENVIRONMENT=DEV
       - GITHUB_USERS_QUANTITY=1000000 
