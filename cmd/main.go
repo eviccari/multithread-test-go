@@ -29,7 +29,7 @@ func main() {
 	guService := services.NewGithubUserServiceImpl(guRepo)
 	gtService := services.NewGreatestUserServiceImpl(gtRepo)
 
-	o := orchestrators.NewHireGithubUsersOrchestrator(guService, gtService)
+	o := orchestrators.NewHireGithubUsersMTOrchestrator(guService, gtService)
 
 	el := o.Execute()
 
